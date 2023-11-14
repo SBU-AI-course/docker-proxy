@@ -1,0 +1,25 @@
+version: '3'
+
+services:
+  docker-proxy:
+    image: docker-proxy:latest
+    container_name: docker-proxy
+    volumes:
+      - .:/app
+      - docker-proxy-data:/data
+      - /var/run/docker.sock:/var/run/docker.sock
+    environment:
+      - TEMP_DIR=$PWD
+    ports:
+      - 2000:80
+    networks:
+      - docker-network
+
+networks:
+  docker-network:
+    driver: bridge
+    name: docker-network
+
+volumes:
+  docker-proxy-data:
+    external: true
