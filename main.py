@@ -29,7 +29,7 @@ def index():
         image="python:3.9-alpine",
         command=["python3", f"{folderName}/main.py"],
         name='test',
-        working_dir="/data",
+        working_dir=folderName,
         volumes_from=['docker-proxy'],
         remove=True,
     )
