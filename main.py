@@ -18,17 +18,17 @@ def index():
     request.files['runnerCode'].save(runnerZipFile)
     request.files['submition'].save(submitZipFile)
 
-    with zipfile.ZipFile(runnerZipFile, "r") as zip_ref:
+    with zipfile.ZipFile(submitZipFile, "r") as zip_ref:
         zip_ref.extractall(folderName)
 
-    with zipfile.ZipFile(submitZipFile, "r") as zip_ref:
+    with zipfile.ZipFile(runnerZipFile, "r") as zip_ref:
         zip_ref.extractall(folderName)
 
     client = docker.from_env()
     res = client.containers.run(
         image="python:3.9-alpine",
         command=["python3", f"{folderName}/main.py"],
-        name='test',
+        name=uuid.uuid4(),
         working_dir=folderName,
         volumes_from=['docker-proxy'],
         remove=True,
