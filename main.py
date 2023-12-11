@@ -26,7 +26,7 @@ def index():
 
     client = docker.from_env()
     res = client.containers.run(
-        image="python:3.9-alpine",
+        image="ghcr.io/sbu-ai-course/numpy-image",
         command=["python3", f"{folderName}/main.py"],
         name=uuid.uuid4(),
         working_dir=folderName,
